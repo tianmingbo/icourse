@@ -1,5 +1,7 @@
 from django.test import TestCase
 
 # Create your tests here.
-import datetime
-print(datetime.datetime.now)
+import uuid
+random = str(uuid.uuid1())
+code = random[0:8]
+print(random,code)

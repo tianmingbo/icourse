@@ -23,9 +23,12 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
-    url(r'^login/', LoginView.as_view(), name='login'),
-    url(r'^logout/', LogoutView.as_view(), name='logout')
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^register/$', RegisterView.as_view(), name='register'),
+    url('^captcha/', include('captcha.urls')),  # 验证码
+    url('^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name='user_active'),  # 用户激活,active_code是传递的参数
 ]
 
 # if settings.DEBUG:

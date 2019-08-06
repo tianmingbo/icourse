@@ -69,7 +69,7 @@
             </div>
             <div class="fl form-box">
                 <h2>帐号登录</h2>
-                <form action="/login/" method="post" autocomplete="off">
+                <form action="{% url 'login' %}" method="post" autocomplete="off">
                     {% csrf_token %}
                     <div class="form-group marb20 {% if login_form.errors.username %}errorput{% endif %}">
                         <label>用&nbsp户&nbsp名</label>
@@ -91,7 +91,7 @@
                     </div>
                     <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > "/>
                 </form>
-                <p class="form-p">没有慕学在线网帐号？<a href="">[立即注册]</a></p>
+                <p class="form-p">没有慕学在线网帐号？<a href="{% url 'register' %}">[立即注册]</a></p>
             </div>
         </div>
     </div>

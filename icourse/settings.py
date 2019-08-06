@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'origanization',
     'xadmin',
     'crispy_forms',  # 是下划线，不是横线
+    'captcha',
 
 ]
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -148,3 +149,11 @@ STATICFILES_DIRS = (
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+# 发送邮件设置
+EMAIL_HOST = "smtp.sina.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "18848868890m@sina.cn"
+EMAIL_HOST_PASSWORD = "tmb8389474687"
+EMAIL_USE_TLS = False
+EMAIL_FROM = "18848868890m@sina.cn"
