@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'debug_toolbar',
     # 注册app
     'users',
     'courses',
@@ -58,6 +59,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'icourse.urls'
@@ -130,3 +133,18 @@ USE_TZ = False  # 时间按照本机时间，不按照国际时间
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+# 静态文件路径
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# # 调试工具配置
+# INTERNAL_IPS = ['127.0.0.1', ]
+# DEBUG_TOOLBAR_CONFIG = {
+#     "JQUERY_URL": '//cdn.bootcss.com/jquery/2.1.4/jquery.min.js',
+# }
+
+# 设置可以通过邮箱验证登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
