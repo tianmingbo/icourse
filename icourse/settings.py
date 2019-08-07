@@ -151,7 +151,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # 发送邮件设置
-EMAIL_HOST = "smtp.sina.com"
+EMAIL_HOST = "smtp.sina.cn"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "18848868890m@sina.cn"
 EMAIL_HOST_PASSWORD = "tmb8389474687"

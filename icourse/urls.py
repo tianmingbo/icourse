@@ -27,8 +27,11 @@ urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
-    url('^captcha/', include('captcha.urls')),  # 验证码
-    url('^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name='user_active'),  # 用户激活,active_code是传递的参数
+    url(r'^captcha/', include('captcha.urls')),  # 验证码
+    url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name="user_active"),  # 用户激活,active_code是传递的参数
+    url(r'^forget/$', ForgetView.as_view(), name='forget_pwd'),
+    url(r'^reset/(?P<active_code>.*)/$', ResetView.as_view(), name='reset_pwd'),  # 重置密码链接
+    url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),# 修改密码链接
 ]
 
 # if settings.DEBUG:
