@@ -18,7 +18,8 @@ Including another URLconf
 from django.views.generic import TemplateView
 from users.views import *
 import xadmin
-from django.conf import settings
+from icourse.settings import MEDIA_ROOT
+from django.views.static import serve  # 处理图片
 from django.conf.urls import include, url
 
 urlpatterns = [
@@ -31,7 +32,13 @@ urlpatterns = [
     url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name="user_active"),  # 用户激活,active_code是传递的参数
     url(r'^forget/$', ForgetView.as_view(), name='forget_pwd'),
     url(r'^reset/(?P<active_code>.*)/$', ResetView.as_view(), name='reset_pwd'),  # 重置密码链接
-    url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),# 修改密码链接
+    url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),  # 修改密码链接
+    # 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
+    url(r'^media/(?P<path>.*)', serve, {'document_root': MEDIA_ROOT}),
+
+    # 课程机构
+    url(r'^org/', include('origanization.urls', namespace='org')),
+
 ]
 
 # if settings.DEBUG:

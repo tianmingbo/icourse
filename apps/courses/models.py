@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from origanization.models import CourseOrg, Teacher
 
 # Create your models here.
 '''
@@ -24,6 +25,9 @@ class Course(models.Model):
     image = models.ImageField('封面图', upload_to='course/%Y/%m', max_length=100)
     click_nums = models.IntegerField('点击数', default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now, )
+    # 课程属于哪个机构
+    course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name='所属机构', null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, verbose_name='讲师', null=True, blank=True)
 
     class Meta:
         verbose_name = '课程'

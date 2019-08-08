@@ -27,7 +27,7 @@ class CustomBackend(ModelBackend):
 
 class IndexView(View):
     def get(self, request):
-        return HttpResponse('这是主页')
+        return render(request,'index.html')
 
 
 # 基于类CBV

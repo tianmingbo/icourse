@@ -78,6 +78,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 添加图片处理器，显示图片
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -157,3 +159,6 @@ EMAIL_HOST_USER = "18848868890m@sina.cn"
 EMAIL_HOST_PASSWORD = "tmb8389474687"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "18848868890m@sina.cn"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 上传文件路径
