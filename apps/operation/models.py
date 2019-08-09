@@ -1,7 +1,6 @@
 from django.db import models
 
 from datetime import datetime
-
 from users.models import UserProfile
 from courses.models import Course
 

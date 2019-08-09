@@ -25,6 +25,11 @@ class Course(models.Model):
     image = models.ImageField('封面图', upload_to='course/%Y/%m', max_length=100)
     click_nums = models.IntegerField('点击数', default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now, )
+    tag = models.CharField('课程标签', default='', max_length=10)
+    category = models.CharField('课程类别', default='', max_length=20)
+    you_need_know = models.CharField('课程须知', max_length=300, default='')
+    teacher_tell = models.CharField('老师告诉你', max_length=300, default='')
+
     # 课程属于哪个机构
     course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name='所属机构', null=True, blank=True)
     teacher = models.ForeignKey(Teacher, verbose_name='讲师', null=True, blank=True)
@@ -35,6 +40,18 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
+
+    # 获取这门课程的所有学习者，反向查询
+    def get_learn_users(self):
+        return self.usercourse_set.all()[:5]
+
+    # 获取章节数
+    def get_zj_nums(self):
+        return self.lesson_set.all().count()
+
+    # 获取所有课程
+    def get_course_lesson(self):
+        return self.lesson_set.all()
 
 
 class Lesson(models.Model):
@@ -50,10 +67,16 @@ class Lesson(models.Model):
     def __str__(self):
         return self.name
 
+    # 获取章节视频
+    def get_lesson_vedio(self):
+        return self.video_set.all()
+
 
 class Video(models.Model):
     lesson = models.ForeignKey(Lesson, verbose_name="章节", on_delete=models.CASCADE)
     name = models.CharField("视频名", max_length=100)
+    url = models.CharField('访问地址', max_length=200, default='')
+    learn_times = models.IntegerField('学习时长（分钟）', default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now)
 
     class Meta:

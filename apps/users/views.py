@@ -116,7 +116,6 @@ class ForgetView(View):
         forget_form = ForgetForm(request.POST)
         print('in post')
         if forget_form.is_valid():
-            print('dfadf')
             email = request.POST.get('email')
             email_body, email_title, email_url = send_register_email(email, 'forget')
             # 生成链接
