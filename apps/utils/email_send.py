@@ -17,7 +17,7 @@ def get_random(length=8):
 def send_register_email(email, send_type='register'):
     email_record = EmailVerifyRecord()
     if send_type == 'update_email':
-        code = get_random(4)
+        code = get_random(6)
         code = code.replace('-', '')  # 去除横杠
     else:
         code = get_random(16)
@@ -41,5 +41,12 @@ def send_register_email(email, send_type='register'):
     elif send_type == 'forget':
         email_title = "icourse重置密码"
         email_body = "请点击下面的链接重置密码"
+        email_url = "http://127.0.0.1:8000/reset/{0}".format(code)
+        return email_body, email_title, email_url
+
+
+    elif send_type == 'update_email':
+        email_title = "修改邮箱验证码"
+        email_body = "请点击下面的链接"
         email_url = "http://127.0.0.1:8000/reset/{0}".format(code)
         return email_body, email_title, email_url

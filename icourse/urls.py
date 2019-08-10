@@ -15,7 +15,8 @@ Including another URLconf
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 
-from users.views import *
+from users.views import IndexView, LoginView, LogoutView, RegisterView, ActiveUserView, ForgetView, ResetView, \
+    ModifyPwdView
 import xadmin
 from icourse.settings import MEDIA_ROOT
 from django.views.static import serve  # 处理图片
@@ -39,6 +40,8 @@ urlpatterns = [
     url(r'^org/', include('origanization.urls', namespace='org')),
     # 课程功能
     url(r'^courses/', include('courses.urls', namespace='courses')),
+    # 个人中心
+    url(r'^uses/', include('users.urls', namespace='users')),
 
 ]
 

@@ -6,6 +6,7 @@ from pure_pagination import PageNotAnInteger, Paginator
 from operation.models import UserFavorite, CourseComments, UserCourse
 from utils.mixin_utils import LoginRequiredMixin
 from django.http import HttpResponse
+from django.db.models import Q
 
 
 # Create your views here.
@@ -15,6 +16,13 @@ class CourseListView(View):
         all_courses = Course.objects.all().order_by('-add_time')
         # 热门课程推荐
         hot_courses = all_courses.order_by('-click_nums')[:3]
+        # 搜索
+        keyword = request.GET.get('keywords', '')
+        if keyword:
+            # i表示忽略大小写
+            all_courses = all_courses.filter(
+                Q(name__icontains=keyword) | Q(detail__icontains=keyword) | Q(desc__icontains=keyword))
+
         # 按最热门与参与人数排序
         sort = request.GET.get('sort', '')
         if sort:

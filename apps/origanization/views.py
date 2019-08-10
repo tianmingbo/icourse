@@ -6,6 +6,7 @@ from .forms import *
 from django.http import HttpResponse
 from operation.models import UserFavorite
 from courses.models import Course
+from django.db.models import Q
 
 
 # Create your views here.
@@ -20,6 +21,13 @@ class OrgView(View):
         org_nums = all_orgs.count()
         # 所有城市
         all_citys = CityDict.objects.all()
+
+        # 搜索
+        keyword = request.GET.get('keywords', '')
+        if keyword:
+            # i表示忽略大小写
+            all_orgs = all_orgs.filter(
+                Q(name__icontains=keyword) | Q(desc__icontains=keyword))
 
         # 类别筛选
         category = request.GET.get('ct', '')
@@ -164,6 +172,13 @@ class TeacherListView(View):
         all_teachers = Teacher.objects.all()
         sort = request.GET.get('sort', '')
         teacher_nums = all_teachers.count()
+
+        # 搜索
+        keyword = request.GET.get('keywords', '')
+        if keyword:
+            # i表示忽略大小写
+            all_teachers = all_teachers.filter(
+                Q(name__icontains=keyword) | Q(work_position__icontains=keyword))
         if sort:
             if sort == 'hot':
                 all_teachers = all_teachers.order_by('-click_nums')[:3]
