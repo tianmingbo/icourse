@@ -18,7 +18,7 @@ Including another URLconf
 from users.views import IndexView, LoginView, LogoutView, RegisterView, ActiveUserView, ForgetView, ResetView, \
     ModifyPwdView
 import xadmin
-from icourse.settings import MEDIA_ROOT
+from icourse.settings import MEDIA_ROOT, STATIC_ROOT
 from django.views.static import serve  # 处理图片
 from django.conf.urls import include, url
 
@@ -35,14 +35,16 @@ urlpatterns = [
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),  # 修改密码链接
     # 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
     url(r'^media/(?P<path>.*)', serve, {'document_root': MEDIA_ROOT}),
-
+    # 静态文件配置，当debug为False时
+    # url(r'^static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT}),
     # 课程机构
     url(r'^org/', include('origanization.urls', namespace='org')),
     # 课程功能
     url(r'^courses/', include('courses.urls', namespace='courses')),
     # 个人中心
     url(r'^uses/', include('users.urls', namespace='users')),
-
+    # 富文本相关url
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
 ]
 
 # if settings.DEBUG:
@@ -51,3 +53,8 @@ urlpatterns = [
 #     urlpatterns = [
 #                       url(r'^__debug__/', include(debug_toolbar.urls)),
 #                   ] + urlpatterns
+
+# 全局404页面配置
+handler404 = 'users.views.page_not_found'
+# 全局500页面配置
+handler500 = 'users.views.page_error'

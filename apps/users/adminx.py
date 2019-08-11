@@ -22,13 +22,14 @@ class EmailVerifyRecordConfig(object):  # 定制显示列
     list_display = ['code', 'email', 'send_type', 'send_time']
     search_fields = ['code', 'email', 'send_type']  # 搜索
     list_filter = ['code', 'email', 'send_type', 'send_time']
+    model_icon ='fa fa-envelope-o'
 
 
 class BannerConfig(object):  # 定制显示列
     list_display = ['title', 'image', 'url', 'index', 'add_time']
     search_fields = ['title', 'image', 'url', 'index']  # 搜索
     list_filter = ['title', 'image', 'url', 'index', 'add_time']
-
+    model_icon ='fa fa-file-image-o'
 
 # xadmin.site.register(UserProfile)
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordConfig)

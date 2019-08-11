@@ -27,7 +27,7 @@ SECRET_KEY = 's$%!zp1uu=p-m4_4b^$f%7^2rbg1)(ae5o11qw(gk=l@q%5lj#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',  # 是下划线，不是横线
     'captcha',
+    'pure_pagination',
+    'DjangoUeditor',
 
 ]
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -137,9 +139,8 @@ USE_TZ = False  # 时间按照本机时间，不按照国际时间
 
 STATIC_URL = '/static/'
 # 静态文件路径
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # # 调试工具配置
 # INTERNAL_IPS = ['127.0.0.1', ]
@@ -156,7 +157,7 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_HOST = "smtp.sina.cn"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "18848868890m@sina.cn"
-EMAIL_HOST_PASSWORD = "tmb8389474687"
+EMAIL_HOST_PASSWORD = "**********"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "18848868890m@sina.cn"
 

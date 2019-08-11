@@ -3,7 +3,6 @@ from django.contrib import auth
 from django.urls import reverse
 from users.forms import *
 from django.contrib.auth.backends import ModelBackend
-from users.models import *
 from django.db.models import Q, F
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
@@ -11,6 +10,7 @@ from utils.email_send import *
 from django.utils.safestring import mark_safe
 import json
 from utils.mixin_utils import LoginRequiredMixin
+from .models import Banner
 
 
 # Create your views here.
@@ -29,7 +29,15 @@ class CustomBackend(ModelBackend):
 
 class IndexView(View):
     def get(self, request):
-        return render(request, 'index.html')
+        # 轮播图
+        all_banners = Banner.objects.all().order_by('index')
+        # 课程
+        courses = Course.objects.filter(is_banner=False)[:6]
+        # 轮播课程
+        banner_courses = Course.objects.filter(is_banner=True)[:3]
+        # 课程机构
+        course_orgs = Course.objects.all()[:15]
+        return render(request, 'index.html', locals())
 
 
 # 基于类CBV
@@ -289,3 +297,19 @@ class MyMessageView(View):
         p = Paginator(all_message, 4, request=request)
         messages = p.page(page)
         return render(request, 'usercenter-message.html', {'message': messages})
+
+
+def page_not_found(request):
+    # 全局404
+    from django.shortcuts import render_to_response
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+def page_error(request):
+    # 全局500
+    from django.shortcuts import render_to_response
+    response = render_to_response('500.html', {})
+    response.status_code = 500
+    return response

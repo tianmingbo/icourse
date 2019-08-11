@@ -10,6 +10,8 @@ class CourseOrgConfig(object):  # 定制显示列
     list_display = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city', 'add_time']
     search_fields = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city']
     list_filter = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city', 'add_time']
+    relfield_style = 'fk-ajax'
+    model_icon = 'fa fa-building'
 
 
 class TeacherConfig(object):  # 定制显示列
@@ -19,12 +21,14 @@ class TeacherConfig(object):  # 定制显示列
                      'teacher_age']
     list_filter = ['org', 'name', 'work_years', 'work_company', 'work_position', 'points', 'click_nums', 'fav_nums',
                    'teacher_age', 'add_time']
+    model_icon = 'fa fa-user-md'
 
 
 class CityDictConfig(object):  # 定制显示列
     list_display = ['name', 'desc', 'add_time']
     search_fields = ['name', 'desc']
     list_filter = ['name', 'desc', 'add_time']
+    model_icon = 'fa fa-building'
 
 
 # xadmin.site.register(UserProfile)

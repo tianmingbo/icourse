@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from origanization.models import CourseOrg, Teacher
+from DjangoUeditor.models import UEditorField
 
 # Create your models here.
 '''
@@ -17,7 +18,8 @@ class Course(models.Model):
 
     name = models.CharField('课程名', max_length=50)
     desc = models.CharField('课程描述', max_length=300)
-    detail = models.TextField('课程详情')
+    detail = UEditorField(verbose_name=u'课程详情', width=600, height=300, imagePath="courses/ueditor/",
+                          filePath="courses/ueditor/", default='')
     degree = models.CharField('难度', max_length=2, choices=degree_choices)
     learn_times = models.IntegerField('学习时长（分钟）', default=0)
     students = models.IntegerField('学习人数', default=0)
@@ -25,6 +27,7 @@ class Course(models.Model):
     image = models.ImageField('封面图', upload_to='course/%Y/%m', max_length=100)
     click_nums = models.IntegerField('点击数', default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now, )
+    is_banner = models.BooleanField('轮播课程', default=False)
     tag = models.CharField('课程标签', default='', max_length=10)
     category = models.CharField('课程类别', default='', max_length=20)
     you_need_know = models.CharField('课程须知', max_length=300, default='')
@@ -52,6 +55,14 @@ class Course(models.Model):
     # 获取所有课程
     def get_course_lesson(self):
         return self.lesson_set.all()
+
+    get_zj_nums.short_description = "章节数"
+
+    def go_to(self):
+        from django.utils.safestring import mark_safe
+        return mark_safe("<a href='http://www.projectsedu.com'>跳转</>")
+
+    go_to.short_description = "跳转"
 
 
 class Lesson(models.Model):
@@ -85,6 +96,16 @@ class Video(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class BannerCourse(Course):
+    '''显示轮播课程'''
+
+    class Meta:
+        verbose_name = '轮播课程'
+        verbose_name_plural = verbose_name
+        # 这里必须设置proxy=True，这样就不会在生成一张表，而且具有Model的功能
+        proxy = True
 
 
 class CourseResource(models.Model):
